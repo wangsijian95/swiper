@@ -12,3 +12,16 @@ YZX_SMS_PARAMS = {
 
 # 缓存 key prefix
 VERIFY_CODE_CACHE_PREFIX = 'verfiy_code:%s'
+REWIND_CACHE_PREFIX='rewind_code:s%'
+
+
+
+# 七牛云配置
+QN_ACCESS_KEY='A2rMGk_1unIHdPAx7-LbAcKfofhyQkrbAC0a_eR-'
+QN_SECRET_KEY='_xIiL-8oTwx_W1lB2kbAPFZN7ECbdCEE8lLwV6E_'
+
+# 要上传的空间
+QN_BUCKET='swiper'
+
+
+QN_HOST = 'http://pu420clqe.bkt.clouddn.com'

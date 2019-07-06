@@ -1,3 +1,7 @@
+import os
+import time
+from urllib.parse import urljoin
+
 from django.core.cache import cache
 from django.http import JsonResponse
 
@@ -5,6 +9,7 @@ from common import error, config
 from common.utils import is_Phone_num
 from lib import http
 from lib.http import render_json
+from swiper import settings
 from user import logic
 from user.forms import ProfileForm
 from user.models import User
@@ -49,11 +54,9 @@ def get_profile(request):
 
 def set_profile(request):
     user=request.user
-    forms=ProfileForm(request.POST)
+    forms=ProfileForm(request.POST,instance=user.profile)
     if forms.is_valid():
-        profile=forms.save(commit=False)
-        profile.id=user.id
-        profile.save()
+        forms.save()
         return render_json()
     else:
         return render_json(data=forms.errors)
@@ -61,4 +64,11 @@ def set_profile(request):
 
 
 def upload_avatar(request):
-    pass
+    avatar=request.FILES.get('avatar')
+    user=request.user
+    ret=logic.async_upload_avatar(user,avatar)
+
+    if ret:
+       render_json()
+    else:
+        render_json(code=error.AVATAR_UPLOAD_ERR)
